@@ -73,7 +73,7 @@ def recall_at_k(y_true: np.ndarray, y_prob: np.ndarray, k: int) -> float:
             sorted order by y_prob
 
     Returns:
-        recall (~float): The recall at k
+        recall (float): The recall at k
 
     Example:
     >>> y_true = np.array([
@@ -140,7 +140,7 @@ def precision_at_k(y_true: np.ndarray, y_prob: np.ndarray, k: int) -> float:
             sorted order by y_prob
 
     Returns:
-        precision_k (~np.ndarray): The precision at k
+        precision_k (float): The precision at k
 
     Example:
     >>> y_true = np.array([
@@ -185,7 +185,7 @@ def precision_at_k(y_true: np.ndarray, y_prob: np.ndarray, k: int) -> float:
 
 
 @typechecked
-def mean_reciprocal_rank(y_true: np.ndarray, y_prob: np.ndarray) -> float:
+def mean_reciprocal_rank(y_true: np.ndarray, y_prob: np.ndarray) -> ma:
     """
     Gets a positional score about how well you did at rank 1, rank 2,
     etc. The resulting vector is of size (n_items,) but element 0 corresponds to
@@ -225,7 +225,7 @@ def mean_reciprocal_rank(y_true: np.ndarray, y_prob: np.ndarray) -> float:
 
 
 @typechecked
-def label_mean_reciprocal_rank(y_true: np.ndarray, y_prob: np.ndarray) -> float:
+def label_mean_reciprocal_rank(y_true: np.ndarray, y_prob: np.ndarray) -> ma:
     """
     Determines the average rank each label was placed across samples. Only labels that are
     relevant in the true data set are considered in the calculation.
@@ -250,7 +250,7 @@ def label_mean_reciprocal_rank(y_true: np.ndarray, y_prob: np.ndarray) -> float:
 
 
 @typechecked
-def ndcg(y_true: np.ndarray, y_prob: np.ndarray, k=0) -> float:
+def ndcg(y_true: np.ndarray, y_prob: np.ndarray, k=0) -> np.float64:
     """
     A score for measuring the quality of a set of ranked results. The resulting score is between 0 and 1.0 -
     results that are relevant and appear earlier in the result set are given a heavier weight, so the
