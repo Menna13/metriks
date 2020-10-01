@@ -5,9 +5,12 @@ Metrics to use for ranking models.
 """
 
 import numpy as np
+import numpy.ma as ma
+from typing import Tuple
+from pytypes import typechecked
 
-
-def check_arrays(y_true, y_prob):
+@typechecked
+def check_arrays(y_true: np.ndarray, y_prob: np.ndarray) -> None :
     # Make sure that inputs this conforms to our expectations
     assert isinstance(y_true, np.ndarray), AssertionError(
         'Expect y_true to be a {expected}. Got {actual}'
@@ -36,7 +39,8 @@ def check_arrays(y_true, y_prob):
     )
 
 
-def check_k(n_items, k):
+@typechecked
+def check_k(n_items: int, k: int) -> None:
     # Make sure that inputs conform to our expectations
     assert isinstance(k, int), AssertionError(
         'Expect k to be a {expected}. Got {actual}'
@@ -49,7 +53,8 @@ def check_k(n_items, k):
     )
 
 
-def recall_at_k(y_true, y_prob, k):
+@typechecked
+def recall_at_k(y_true: np.ndarray, y_prob: np.ndarray, k: int) -> float:
     """
     Calculates recall at k for binary classification ranking problems. Recall
     at k measures the proportion of total relevant items that are found in the
@@ -68,7 +73,7 @@ def recall_at_k(y_true, y_prob, k):
             sorted order by y_prob
 
     Returns:
-        recall (~np.ndarray): The recall at k
+        recall (~float): The recall at k
 
     Example:
     >>> y_true = np.array([
@@ -118,7 +123,8 @@ def recall_at_k(y_true, y_prob, k):
     return recall
 
 
-def precision_at_k(y_true, y_prob, k):
+@typechecked
+def precision_at_k(y_true: np.ndarray, y_prob: np.ndarray, k: int) -> float:
     """
     Calculates precision at k for binary classification ranking problems.
     Precision at k measures the proportion of items in the top k (in ranked
@@ -178,7 +184,8 @@ def precision_at_k(y_true, y_prob, k):
     return precision
 
 
-def mean_reciprocal_rank(y_true, y_prob):
+@typechecked
+def mean_reciprocal_rank(y_true: np.ndarray, y_prob: np.ndarray) -> float:
     """
     Gets a positional score about how well you did at rank 1, rank 2,
     etc. The resulting vector is of size (n_items,) but element 0 corresponds to
@@ -217,7 +224,8 @@ def mean_reciprocal_rank(y_true, y_prob):
     return ma.mean(axis=0)
 
 
-def label_mean_reciprocal_rank(y_true, y_prob):
+@typechecked
+def label_mean_reciprocal_rank(y_true: np.ndarray, y_prob: np.ndarray) -> float:
     """
     Determines the average rank each label was placed across samples. Only labels that are
     relevant in the true data set are considered in the calculation.
@@ -241,7 +249,8 @@ def label_mean_reciprocal_rank(y_true, y_prob):
     return ma.mean(axis=0)
 
 
-def ndcg(y_true, y_prob, k=0):
+@typechecked
+def ndcg(y_true: np.ndarray, y_prob: np.ndarray, k=0) -> float:
     """
     A score for measuring the quality of a set of ranked results. The resulting score is between 0 and 1.0 -
     results that are relevant and appear earlier in the result set are given a heavier weight, so the
@@ -322,7 +331,8 @@ def ndcg(y_true, y_prob, k=0):
     return np.mean(sample_ndcg, dtype=np.float64)
 
 
-def generate_y_pred_at_k(y_prob, k):
+@typechecked
+def generate_y_pred_at_k(y_prob: np.ndarray, k: int) -> np.ndarray:
     """
     Generates a matrix of binary predictions from a matrix of probabilities
     by evaluating the top k items (in ranked order by y_prob) as true.
@@ -366,7 +376,8 @@ def generate_y_pred_at_k(y_prob, k):
     return y_pred
 
 
-def confusion_matrix_at_k(y_true, y_prob, k):
+@typechecked
+def confusion_matrix_at_k(y_true: np.ndarray, y_prob: np.ndarray, k: int) -> Tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
     """
     Generates binary predictions from probabilities by evaluating the top k items
     (in ranked order by y_prob) as true. Uses these binary predictions along with
